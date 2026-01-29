@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore and discover your favorite music artists with detailed information about their tours, concerts, and albums.">
+    <title>Groupie Tracker - Discover Artists</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <div class="hero-background" style="background-image: url('{{.HeroImage}}');">
+            <h1 class="hero-title">Discover Music Artists</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="artist-list">
+            {{if .Artists}}
+                {{range .Artists}}
+                <article class="artist-card">
+                    <a href="/artist?id={{.ID}}" class="details-link" aria-label="View details for {{.Name}}">
+                        <div class="image-wrapper">
+                            <img src="{{.Image}}" alt="{{.Name}}" loading="lazy">
+                        </div>
+                        <h2>{{.Name}}</h2>
+                    </a>
+                </article>
+                {{end}}
+            {{else}}
+                <div class="no-artists">
+                    <p>No artists found at the moment. Please check back later.</p>
+                </div>
+            {{end}}
+        </section>
+    </main>
+</body>
+</html>

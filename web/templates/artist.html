@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detailed information about {{.Artist.Name}} - tour dates, concert locations, and band members.">
+    <title>{{.Artist.Name}} - Artist Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main class="artist-page">
+        <header>
+            <h1>{{.Artist.Name}}</h1>
+            <a href="/" class="back-link">Back to Artists</a>
+        </header>
+
+        <div class="artist-grid">
+            <section class="grid-item">
+                <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 30px;">
+                    <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}" class="artist-image">
+                    <div style="flex: 1; min-width: 250px;">
+                        <h2 style="margin-top: 0;">Artist Information</h2>
+                        <p><strong>Creation Date:</strong> {{.Artist.CreationDate}}</p>
+                        <p><strong>First Album:</strong> {{.Artist.FirstAlbum}}</p>
+                    </div>
+                </div>
+            </section>
+
+            {{if .Artist.Members}}
+            <section class="grid-item">
+                <h2>Band Members</h2>
+                <ul class="members-list">
+                    {{range .Artist.Members}}
+                    <li>{{.}}</li>
+                    {{end}}
+                </ul>
+            </section>
+            {{end}}
+
+            {{if .FormattedLocations}}
+            <section class="grid-item">
+                <h2>Concert Locations</h2>
+                <ul class="location-list">
+                    {{range .FormattedLocations}}
+                    <li>{{.}}</li>
+                    {{end}}
+                </ul>
+            </section>
+            {{end}}
+
+            {{if .FormattedDates}}
+            <section class="grid-item">
+                <h2>Concert Dates</h2>
+                <ul class="date-list">
+                    {{range .FormattedDates}}
+                    <li>{{.}}</li>
+                    {{end}}
+                </ul>
+            </section>
+            {{end}}
+
+            {{if .FormattedRelations}}
+            <section class="grid-item">
+                <h2>Tour Schedule</h2>
+                <div class="concert-list">
+                    {{range $location, $dates := .FormattedRelations}}
+                    <article class="concert-location">
+                        <h3>{{$location}}</h3>
+                        <ul>
+                            {{range $dates}}
+                            <li>{{.}}</li>
+                            {{end}}
+                        </ul>
+                    </article>
+                    {{end}}
+                </div>
+            </section>
+            {{else}}
+                {{if not .FormattedLocations}}
+                {{if not .FormattedDates}}
+                <section class="grid-item">
+                    <p>No concert information available at this time.</p>
+                </section>
+                {{end}}
+                {{end}}
+            {{end}}
+        </div>
+    </main>
+</body>
+</html>
